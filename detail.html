@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>游戏详情 - 游戏库</title>
+  <link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="detail-nav">
+      <a class="back-btn" href="index.html">← 返回列表</a>
+    </div>
+    <div id="detailContent"></div>
+  </div>
+
+  <script src="src/js/data.js"></script>
+  <script>
+    const id = Number(new URLSearchParams(location.search).get("id"));
+    const game = games.find(g => g.id === id);
+    const contentEl = document.getElementById("detailContent");
+
+    if (!game) {
+      contentEl.innerHTML = '<div class="not-found">未找到该游戏</div>';
+    } else {
+      document.title = `${game.name} - 游戏库`;
+      contentEl.innerHTML = `
+        <div class="detail-card">
+          <img class="game-icon" src="${game.icon}" alt="${game.name}">
+          <h2>${game.name}</h2>
+          <p class="update-date">更新于 ${game.updateDate}</p>
+        </div>
+
+        <div class="section">
+          <h3>游戏邀请码</h3>
+          <img class="invite-img" src="${game.inviteImage}" alt="${game.name} 邀请码">
+        </div>
+
+        <div class="section">
+          <h3>下载链接</h3>
+          <a class="download-link" href="${game.downloadLink}" target="_blank" rel="noopener">${game.downloadLink}</a>
+          <a class="download-btn" href="${game.downloadLink}" target="_blank" rel="noopener">前往下载</a>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

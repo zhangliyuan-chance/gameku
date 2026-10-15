@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>开黑游戏百宝箱</title>
+  <link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+  <div class="header">
+    <h1>开黑游戏百宝箱</h1>
+    <p>好友私藏热门游戏</p>
+  </div>
+
+  <div class="container">
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="搜索游戏名称...">
+    </div>
+    <div class="game-list" id="gameList"></div>
+  </div>
+
+  <script src="src/js/data.js"></script>
+  <script>
+    const listEl = document.getElementById("gameList");
+    const searchInput = document.getElementById("searchInput");
+
+    function render(list) {
+      if (list.length === 0) {
+        listEl.innerHTML = '<div class="empty-tip">没有找到相关游戏</div>';
+        return;
+      }
+      listEl.innerHTML = list.map(game => `
+        <a class="game-item" href="detail.html?id=${game.id}">
+          <img src="${game.icon}" alt="${game.name}">
+          <div class="info">
+            <h3>${game.name}</h3>
+            <p>更新于 ${game.updateDate}</p>
+          </div>
+          <span class="view-btn">查看</span>
+        </a>
+      `).join("");
+    }
+
+    searchInput.addEventListener("input", () => {
+      const keyword = searchInput.value.trim();
+      render(games.filter(g => g.name.includes(keyword)));
+    });
+
+    render(games);
+  </script>
+</body>
+</html>
